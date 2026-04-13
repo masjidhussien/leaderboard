@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"> <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لائحة المتفوقين | مسجد الحسين</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- 1. GLOBAL VARIABLES & RESET --- */
+:root {
+    /* Main Theme Colors */
+    --primary: #2c3e50;    /* Dark Elegant Blue */
+    --secondary: #27ae60;  /* Professional Green */
+    --background: #f4f7f6; /* Soft Off-White */
+    --surface: #ffffff;    /* Pure White for Cards */
+    --text-main: #333333;
+    --text-muted: #7f8c8d;
+
+    /* Medal Colors (Modern Metallic Shades) */
+    --gold: #f1c40f;
+    --silver: #bdc3c7;
+    --bronze: #cd7f32;
+
+    /* Styling Constants */
+    --radius-lg: 16px;
+    --radius-md: 8px;
+    --radius-sm: 4px;
+    --shadow-sm: 0 2px 5px rgba(0,0,0,0.05);
+    --shadow-md: 0 5px 15px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Cairo', sans-serif; /* Professional Arabic Font */
+    background-color: var(--background);
+    color: var(--text-main);
+    line-height: 1.6;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.main-container {
+    width: 100%;
+    max-width: 600px; /* Elegant, focused width */
+    margin: 0 auto;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* --- 2. HEADER STYLING --- */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding: 10px 0;
+    border-bottom: 2px solid rgba(0,0,0,0.03);
+}
+
+#group-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary);
+    position: relative;
+    padding-right: 15px;
+}
+
+#group-title::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 15%;
+    height: 70%;
+    width: 5px;
+    background-color: var(--secondary);
+    border-radius: var(--radius-sm);
+}
+
+/* The Info Button (؟) */
+.info-toggle {
+    background: var(--surface);
+    color: var(--text-muted);
+    border: 1px solid #ddd;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    font-family: serif;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.info-toggle:hover {
+    background: #e1f5fe;
+    color: #0288d1;
+    border-color: #0288d1;
+    transform: translateY(-2px);
+}
+
+/* --- 3. STUDENT LIST STYLING (The Core Logic) --- */
+.student-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* Elegant spacing between cards */
+}
+
+/* Basic Student Row - Modern Card Style */
+.student-row {
+    background-color: var(--surface);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-radius: var(--radius-md); /* Rounded Edges */
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-right: 4px solid transparent; /* Left Border placeholder */
+}
+
+.student-row:hover {
+    transform: translateX(-3px); /* Elegant shift on hover */
+    box-shadow: var(--shadow-md);
+}
+
+/* Left side (Rank + Name) */
+.student-meta {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.rank {
+    font-size: 1.3rem;
+    font-weight: 700;
+    width: 35px;
+    text-align: center;
+    color: var(--text-muted);
+}
+
+.name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+/* Right side (Points) */
+.points {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--secondary);
+    background-color: rgba(39, 174, 96, 0.1);
+    padding: 5px 12px;
+    border-radius: var(--radius-lg); /* Oval Points Tag */
+}
+
+/* --- 4. TOP THREE (Medal Coloring) --- */
+
+/* Gold - Rank 1 */
+.student-list .student-row:nth-child(1) {
+    background: linear-gradient(to left, var(--surface), rgba(241, 196, 15, 0.05));
+    border-right-color: var(--gold);
+    box-shadow: 0 4px 10px rgba(241, 196, 15, 0.1);
+}
+.student-list .student-row:nth-child(1) .rank {
+    color: var(--gold);
+    text-shadow: 0 0 10px rgba(241, 196, 15, 0.3);
+}
+
+/* Silver - Rank 2 */
+.student-list .student-row:nth-child(2) {
+    background: linear-gradient(to left, var(--surface), rgba(189, 195, 199, 0.05));
+    border-right-color: var(--silver);
+}
+.student-list .student-row:nth-child(2) .rank {
+    color: var(--silver);
+}
+
+/* Bronze - Rank 3 */
+.student-list .student-row:nth-child(3) {
+    background: linear-gradient(to left, var(--surface), rgba(205, 127, 50, 0.05));
+    border-right-color: var(--bronze);
+}
+.student-list .student-row:nth-child(3) .rank {
+    color: var(--bronze);
+}
+
+/* Add small medal emojis dynamically */
+.student-list .student-row:nth-child(1) .student-meta::before { content: '🥇'; font-size: 1.2rem; }
+.student-list .student-row:nth-child(2) .student-meta::before { content: '🥈'; font-size: 1.2rem; }
+.student-list .student-row:nth-child(3) .student-meta::before { content: '🥉'; font-size: 1.2rem; }
+
+/* --- 5. MODAL (Pop-up) STYLING --- */
+.modal-overlay {
+    position: fixed;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background-color: rgba(0,0,0,0.5); /* Semi-transparent backdrop */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px); /* Elegant blur effect */
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.modal-content {
+    background-color: var(--surface);
+    width: 90%;
+    max-width: 450px;
+    padding: 30px;
+    border-radius: var(--radius-lg); /* Heavily rounded modal */
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    animation: modalIn 0.3s ease;
+}
+
+@keyframes modalIn {
+    from { transform: translateY(-30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px; left: 15px; /* Adjust for RTL */
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+.close-modal:hover { color: #d93025; }
+
+.modal-content h2 { color: var(--primary); margin-bottom: 10px; font-weight: 700; }
+.modal-content h3 { color: var(--text-main); margin-bottom: 20px; font-weight: 600; font-size: 1rem;}
+
+.howto-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.howto-list li {
+    background-color: rgba(0,0,0,0.02);
+    padding: 12px 15px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+}
+
+.pts {
+    background-color: var(--secondary);
+    color: white;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+}
+
+/* --- 6. LOADING SKELETON ANIMATION --- */
+#loading-skeleton {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.skeleton-row {
+    height: 70px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: var(--radius-md);
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* --- 7. RESPONSIVE ADJUSTMENTS --- */
+@media (max-width: 480px) {
+    body { padding: 10px; }
+    #group-title { font-size: 1.4rem; }
+    .student-row { padding: 12px 15px; }
+    .name { font-size: 1rem; }
+    .rank { font-size: 1.1rem; width: 25px;}
+    .student-meta { gap: 10px; }
+}
+/* Styling for the Halaqa Selection Menu */
+.halaqa-card {
+    background-color: var(--surface);
+    padding: 20px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-right: 4px solid var(--secondary);
+    text-decoration: none;
+    color: inherit;
+    margin-bottom: 12px;
+}
+
+.halaqa-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    background-color: #fcfdfd;
+}
+
+.halaqa-info h4 {
+    color: var(--primary);
+    font-size: 1.2rem;
+    margin-bottom: 4px;
+}
+
+.halaqa-info p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.arrow-icon {
+    color: var(--secondary);
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <header class="page-header">
+            <h1 id="group-title">لائحة المتفوقين</h1>
+            <button class="info-toggle" id="info-toggle">؟</button>
+        </header>
+
+        <div id="leaderboard-container">
+            <div id="loading-skeleton">
+                <div class="skeleton-row"></div>
+                <div class="skeleton-row"></div>
+                <div class="skeleton-row"></div>
+            </div>
+            <div id="student-list" class="student-list hidden"></div>
+        </div>
+
+        <div class="modal-overlay hidden" id="modal-overlay">
+            <div class="modal-content">
+                <button class="close-modal" id="close-modal">&times;</button>
+                <h2>كيف أتصدّر على اللّائحة؟</h2>
+                <h3>للتّصدّر على لائحة المتميّزين، يجب عليك جمع النّقاط من خلال:</h3>
+                <ul class="howto-list">
+                    <li><span class="pts">+10</span> حضور الحلقة</li>
+                    <li><span class="pts">+7</span> صلاة الفجر في المسجد</li>
+                    <li><span class="pts">+5</span> حفظ مقطع القرآن المطلوب</li>
+                    <li><span class="pts">+3</span> المشاركة الحسنة والانضباط</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="./index.js"></script>
+</body>
+</html>

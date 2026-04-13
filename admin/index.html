@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم | إدارة الحلقة</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #27ae60;
+            --danger: #d93025;
+            --background: #f4f7f6;
+            --surface: #ffffff;
+            --text-main: #333333;
+            --radius-md: 12px;
+            --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--background);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px 20px;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            background: var(--surface);
+            padding: 30px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        h2,
+        h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 2px rgba(39, 174, 96, 0.1);
+        }
+
+        button {
+            cursor: pointer;
+            padding: 12px 20px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            transition: all 0.2s;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        #email-login {
+            background: var(--primary);
+            color: white;
+            margin-top: 10px;
+        }
+
+        #email-signup {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid #ddd;
+            margin-top: 8px;
+        }
+
+        #save-student {
+            background: var(--secondary);
+            color: white;
+        }
+
+        #logout {
+            background: #eee;
+            color: var(--danger);
+            margin-top: 20px;
+        }
+
+        button:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Student List Styling */
+        #student-list {
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        /* Student List Row styling */
+        .admin-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            /* Refined padding */
+            background: #fdfdfd;
+            /* Lighter background for the row */
+            margin-bottom: 8px;
+            border-radius: 8px;
+            border-right: 3px solid #eee;
+            /* Default neutral border */
+            transition: all 0.2s ease;
+        }
+
+        /* Row hover effect */
+        .admin-row:hover {
+            background: white;
+            border-right-color: var(--secondary);
+            /* Green border on hover */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Left side of the row (Name and Points) */
+        .student-data {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .admin-name {
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 1rem;
+        }
+
+        .admin-points {
+            font-size: 0.85rem;
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        /* --- THE UPDATED EDIT BUTTON --- */
+        .edit-btn {
+            background: #f0f0f0;
+            /* Neutral grey, very discreet */
+            color: #7f8c8d;
+            /* Muted text color */
+            padding: 4px 12px;
+            /* Small, refined padding */
+            font-size: 0.75rem;
+            /* Tiny but readable font */
+            width: auto;
+            /* Inline width, not full width */
+            margin: 0;
+            border-radius: 12px;
+            /* More rounded for a 'tag' look */
+            border: 1px solid #e0e0e0;
+            transition: all 0.2s ease;
+        }
+
+        .edit-btn:hover {
+            background: var(--secondary);
+            /* Switches to Green on hover */
+            color: white;
+            /* White text on hover */
+            border-color: var(--secondary);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 5px rgba(39, 174, 96, 0.2);
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid #eee;
+            margin: 25px 0;
+        }
+
+        .user-info {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="setup-section" class="hidden" style="
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+    background: var(--background); z-index: 2000; 
+    display: flex; justify-content: center; align-items: center;">
+        <div class="card" style="max-width: 400px;">
+            <h2>إعداد الحلقة الجديدة</h2>
+            <p style="margin-bottom: 20px; color: var(--text-muted);">أهلاً بك! يرجى إدخال اسم الحلقة لبدء الإدارة.</p>
+            <input type="text" id="setup-group-name" placeholder="اسم الحلقة (مثال: الفرقان)">
+            <button id="complete-setup" style="background: var(--secondary); color: white;">إتمام الإعداد</button>
+        </div>
+    </div>
+    <div class="card">
+        <h2>نظام إدارة الحلقة</h2>
+
+        <div id="login-section">
+            <input type="email" id="email" placeholder="البريد الإلكتروني">
+            <input type="password" id="password" placeholder="كلمة المرور">
+            <button id="email-login">تسجيل الدخول</button>
+            <button id="email-signup">إنشاء حساب جديد</button>
+        </div>
+
+        <div id="user-section" class="hidden">
+            <div class="user-info">
+                مرحباً بك: <span id="user-name" style="font-weight:bold; color: var(--primary);"></span>
+            </div>
+
+            <hr>
+
+            <h3>تحديث/إضافة بيانات الطلاب</h3>
+            <div style="display: flex; flex-direction: column; gap: 5px;">
+                <input type="text" id="student-name" placeholder="اسم الطالب">
+                <input type="number" id="student-points" placeholder="عدد النقاط">
+                <button id="save-student">حفظ البيانات</button>
+            </div>
+
+            <h3 style="margin-top: 30px;">قائمة الطلاب الحالية</h3>
+            <div id="student-list">
+            </div>
+
+            <button id="logout">تسجيل الخروج</button>
+        </div>
+    </div>
+
+    <script type="module" src="admin.js"></script>
+</body>
+
+</html>
