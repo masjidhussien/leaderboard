@@ -98,7 +98,7 @@ async function loadLeaderboard() {
                         <span class="rank">#${index + 1}</span>
                         <span class="name">${student.name}</span>
                     </div>
-                    <span class="points">${student.points} نقطة</span>
+                    <span class="points">${student.points} ${student.points != 1 && student.points <= 10 ? "نقاط" : "نقطة"}</span>
                 `;
                 studentList.appendChild(row);
             });
